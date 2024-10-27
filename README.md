@@ -9,8 +9,8 @@ Retrieval-Augmented Generation (RAG) для ответов на вопросы �
 
 1. Клонируйте репозиторий:
    ```bash
-   git clone https://github.com/your-repo-name.git
-   cd your-repo-name
+   git clone https://github.com/radmirkaz/CP_SILA_PFO_BROKE_BOYS_CARTEL.git
+   cd CP_SILA_PFO_BROKE_BOYS_CARTEL
    ```
 
 2. Установите зависимости:
