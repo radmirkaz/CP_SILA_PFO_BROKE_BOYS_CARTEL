@@ -76,6 +76,7 @@ def get_last_3(user_id):
     return " ".join(his)
 
 async def add_reaction(callback: types.CallbackQuery, reaction: int):
+    print(reaction)
     """Добавляет лайк или дизлайк."""
     user_hash = hsh(callback.from_user.id)
     users[user_hash]['f'] = True
@@ -88,7 +89,10 @@ async def add_reaction(callback: types.CallbackQuery, reaction: int):
     )
 
     # Вставка записи в базу данных
-    history_value = 1 if reaction == 1 else 0
+    if reaction == 1:
+        history_value = 1 
+    else:
+        history_value = 0
     cursor.execute(
         """INSERT INTO likes(user_id, reaction, query, answer, history)
            VALUES (%s, %s, %s, %s, %s)""",
@@ -155,7 +159,7 @@ async def any_message(message: Message):
             if ('К сожалению, я не могу ответить на ваш вопрос.' not in str(answer)) and  ('К сожалению, на данный момент я не могу ответить' not in str(answer)):
                 users[user_hash] = {'query': text, 'content': answer, 'f': False}
                 builder = InlineKeyboardBuilder()
-                builder.button(text="👍", callback_data="l  ike")
+                builder.button(text="👍", callback_data="like")
                 builder.button(text="👎", callback_data="dislike")
 
                 # Отправляем ответ пользователю, включая названия разделов, на которые ссылается ответ

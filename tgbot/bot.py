@@ -1,12 +1,9 @@
 import asyncio
-import logging
-import sys
-
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 import message_router
 import psycopg2
-
+import logging
 import warnings
 warnings.simplefilter('ignore')
 
@@ -41,11 +38,14 @@ conn.commit()
 
 # Запуск бота и обработка сообщений
 async def main() -> None:
-    await bot.delete_webhook(drop_pending_updates=True)
-    dp = Dispatcher()
-    dp.include_router(message_router.router)
-    await dp.start_polling(bot)
+    try:
+        await bot.delete_webhook(drop_pending_updates=True)
+        dp = Dispatcher()
+        dp.include_router(message_router.router)
+        await dp.start_polling(bot)
+    except Exception as e:
+        await asyncio.sleep(5)  
+        await main()
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, stream=sys.stdout)
     asyncio.run(main())
